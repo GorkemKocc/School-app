@@ -13,6 +13,7 @@ namespace yazlab1
 	public partial class LoginScreen : UserControl
 	{
 		public UserControl adminScreen;
+		public UserControl studentScreen;
 		public LoginScreen()
 		{
 			InitializeComponent();
@@ -31,6 +32,20 @@ namespace yazlab1
 				this.Visible = false;
 				checkBox2.Checked = false;
 				checkBox3.Checked = false;
+			}
+			if (checkBox2.Checked)
+			{
+				//studentScreen.Visible = true;
+				//this.Visible = false;
+				checkBox1.Checked = false;
+				checkBox3.Checked = false;
+			}
+			if (checkBox3.Checked)
+			{
+				studentScreen.Visible = true;
+				this.Visible = false;
+				checkBox1.Checked = false;
+				checkBox2.Checked = false;
 			}
 		}
 

@@ -30,6 +30,7 @@
 		{
 			adminScreen1 = new AdminScreen();
 			loginScreen1 = new LoginScreen();
+			studentScreen1 = new StudentScreen();
 			SuspendLayout();
 			// 
 			// adminScreen1
@@ -47,11 +48,19 @@
 			loginScreen1.TabIndex = 1;
 			loginScreen1.Load += loginScreen1_Load;
 			// 
+			// studentScreen1
+			// 
+			studentScreen1.Location = new Point(0, 0);
+			studentScreen1.Name = "studentScreen1";
+			studentScreen1.Size = new Size(808, 458);
+			studentScreen1.TabIndex = 2;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
+			Controls.Add(studentScreen1);
 			Controls.Add(loginScreen1);
 			Controls.Add(adminScreen1);
 			Name = "Form1";
@@ -63,5 +72,6 @@
 
 		private AdminScreen adminScreen1;
 		private LoginScreen loginScreen1;
+		private StudentScreen studentScreen1;
 	}
 }

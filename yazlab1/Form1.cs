@@ -8,11 +8,13 @@ namespace yazlab1
 		public Form1()
 		{
 			InitializeComponent();
+			studentScreen1.Visible = false;
 		}
 
 		private void loginScreen1_Load(object sender, EventArgs e)
 		{
 			loginScreen1.adminScreen = adminScreen1;
+			loginScreen1.studentScreen = studentScreen1;
 		}
 	}
 }
