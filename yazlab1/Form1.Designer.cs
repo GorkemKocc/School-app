@@ -59,7 +59,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(800, 450);
+			ClientSize = new Size(809, 498);
 			Controls.Add(studentScreen1);
 			Controls.Add(loginScreen1);
 			Controls.Add(adminScreen1);

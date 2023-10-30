@@ -37,6 +37,8 @@
 			comboBox1 = new ComboBox();
 			checkedListBox1 = new CheckedListBox();
 			button5 = new Button();
+			button6 = new Button();
+			button7 = new Button();
 			SuspendLayout();
 			// 
 			// openFileDialog1
@@ -55,8 +57,9 @@
 			// 
 			// richTextBox1
 			// 
-			richTextBox1.Location = new Point(3, 41);
+			richTextBox1.Location = new Point(3, 61);
 			richTextBox1.Name = "richTextBox1";
+			richTextBox1.ReadOnly = true;
 			richTextBox1.Size = new Size(676, 443);
 			richTextBox1.TabIndex = 1;
 			richTextBox1.Text = "";
@@ -88,22 +91,24 @@
 			button4.TabIndex = 4;
 			button4.Text = "Açılan Dersler";
 			button4.UseVisualStyleBackColor = true;
+			button4.Click += button4_Click;
 			// 
 			// comboBox1
 			// 
 			comboBox1.FormattingEnabled = true;
-			comboBox1.Location = new Point(3, 7);
+			comboBox1.Location = new Point(0, 15);
 			comboBox1.Name = "comboBox1";
-			comboBox1.Size = new Size(676, 28);
+			comboBox1.Size = new Size(370, 28);
 			comboBox1.TabIndex = 5;
 			// 
 			// checkedListBox1
 			// 
 			checkedListBox1.FormattingEnabled = true;
-			checkedListBox1.Location = new Point(3, 41);
+			checkedListBox1.Location = new Point(3, 61);
 			checkedListBox1.Name = "checkedListBox1";
 			checkedListBox1.Size = new Size(676, 400);
 			checkedListBox1.TabIndex = 6;
+			checkedListBox1.Visible = false;
 			// 
 			// button5
 			// 
@@ -113,11 +118,34 @@
 			button5.TabIndex = 7;
 			button5.Text = "Ders Ekle";
 			button5.UseVisualStyleBackColor = true;
+			button5.Click += button5_Click;
+			// 
+			// button6
+			// 
+			button6.Location = new Point(401, 6);
+			button6.Name = "button6";
+			button6.Size = new Size(151, 45);
+			button6.TabIndex = 8;
+			button6.Text = "Talep Edilen Dersler";
+			button6.UseVisualStyleBackColor = true;
+			button6.Click += button6_Click;
+			// 
+			// button7
+			// 
+			button7.Location = new Point(572, 6);
+			button7.Name = "button7";
+			button7.Size = new Size(99, 45);
+			button7.TabIndex = 9;
+			button7.Text = "Talep İptal";
+			button7.UseVisualStyleBackColor = true;
+			button7.Click += button7_Click;
 			// 
 			// StudentScreen
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(button7);
+			Controls.Add(button6);
 			Controls.Add(button5);
 			Controls.Add(checkedListBox1);
 			Controls.Add(comboBox1);
@@ -127,7 +155,7 @@
 			Controls.Add(richTextBox1);
 			Controls.Add(button1);
 			Name = "StudentScreen";
-			Size = new Size(800, 500);
+			Size = new Size(855, 528);
 			ResumeLayout(false);
 		}
 
@@ -142,5 +170,7 @@
 		private ComboBox comboBox1;
 		private CheckedListBox checkedListBox1;
 		private Button button5;
+		private Button button6;
+		private Button button7;
 	}
 }

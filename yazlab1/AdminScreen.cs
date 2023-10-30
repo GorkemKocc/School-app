@@ -28,7 +28,7 @@ namespace yazlab1
 			textBox3.Text = null;
 			textBox4.Text = null;
 			textBox5.Text = null;
-			
+
 		}
 
 		private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -121,8 +121,8 @@ namespace yazlab1
 
 					cmd.Parameters.AddWithValue("@name", textBox1.Text);
 					cmd.Parameters.AddWithValue("@surname", textBox2.Text);
-					cmd.Parameters.AddWithValue("@username", textBox4.Text);
-					cmd.Parameters.AddWithValue("@password", textBox5.Text);
+					cmd.Parameters.AddWithValue("@username", textBox5.Text);
+					cmd.Parameters.AddWithValue("@password", textBox4.Text);
 
 					cmd.ExecuteNonQuery();
 				}
@@ -141,8 +141,8 @@ namespace yazlab1
 					cmd.Parameters.AddWithValue("@name", textBox1.Text);
 					cmd.Parameters.AddWithValue("@surname", textBox2.Text);
 					cmd.Parameters.AddWithValue("@quota", int.Parse(textBox3.Text));
-					cmd.Parameters.AddWithValue("@username", textBox4.Text);
-					cmd.Parameters.AddWithValue("@password", textBox5.Text);
+					cmd.Parameters.AddWithValue("@username", textBox5.Text);
+					cmd.Parameters.AddWithValue("@password", textBox4.Text);
 
 					cmd.ExecuteNonQuery();
 				}
@@ -168,8 +168,8 @@ namespace yazlab1
 						{
 							textBox1.Text = reader["name"].ToString();
 							textBox2.Text = reader["surname"].ToString();
-							textBox4.Text = reader["username"].ToString();
-							textBox5.Text = reader["password"].ToString();
+							textBox5.Text = reader["username"].ToString();
+							textBox4.Text = reader["password"].ToString();
 						}
 					}
 				}
@@ -188,8 +188,8 @@ namespace yazlab1
 							textBox1.Text = reader["name"].ToString();
 							textBox2.Text = reader["surname"].ToString();
 							textBox3.Text = reader["quota"].ToString();
-							textBox4.Text = reader["username"].ToString();
-							textBox5.Text = reader["password"].ToString();
+							textBox5.Text = reader["username"].ToString();
+							textBox4.Text = reader["password"].ToString();
 						}
 					}
 				}
@@ -207,8 +207,8 @@ namespace yazlab1
 					cmd.Parameters.AddWithValue("@id", NpgsqlDbType.Integer, comboBox1.SelectedItem);
 					cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, textBox1.Text);
 					cmd.Parameters.AddWithValue("@surname", NpgsqlDbType.Text, textBox2.Text);
-					cmd.Parameters.AddWithValue("@username", NpgsqlDbType.Text, textBox4.Text);
-					cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, textBox5.Text);
+					cmd.Parameters.AddWithValue("@username", NpgsqlDbType.Text, textBox5.Text);
+					cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, textBox4.Text);
 
 					cmd.ExecuteNonQuery();
 
@@ -225,8 +225,8 @@ namespace yazlab1
 					cmd.Parameters.AddWithValue("@name", NpgsqlDbType.Text, textBox1.Text);
 					cmd.Parameters.AddWithValue("@surname", NpgsqlDbType.Text, textBox2.Text);
 					cmd.Parameters.AddWithValue("@quota", NpgsqlDbType.Integer, int.Parse(textBox3.Text));
-					cmd.Parameters.AddWithValue("@username", NpgsqlDbType.Text, textBox4.Text);
-					cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, textBox5.Text);
+					cmd.Parameters.AddWithValue("@username", NpgsqlDbType.Text, textBox5.Text);
+					cmd.Parameters.AddWithValue("@password", NpgsqlDbType.Text, textBox4.Text);
 
 					cmd.ExecuteNonQuery();
 
