@@ -39,6 +39,8 @@
 			button5 = new Button();
 			button6 = new Button();
 			button7 = new Button();
+			button8 = new Button();
+			button9 = new Button();
 			SuspendLayout();
 			// 
 			// openFileDialog1
@@ -47,9 +49,9 @@
 			// 
 			// button1
 			// 
-			button1.Location = new Point(692, 142);
+			button1.Location = new Point(716, 142);
 			button1.Name = "button1";
-			button1.Size = new Size(94, 60);
+			button1.Size = new Size(104, 60);
 			button1.TabIndex = 0;
 			button1.Text = "Transkript Ekle";
 			button1.UseVisualStyleBackColor = true;
@@ -66,9 +68,9 @@
 			// 
 			// button2
 			// 
-			button2.Location = new Point(692, 76);
+			button2.Location = new Point(716, 76);
 			button2.Name = "button2";
-			button2.Size = new Size(94, 60);
+			button2.Size = new Size(104, 60);
 			button2.TabIndex = 2;
 			button2.Text = "Transkript Görüntüle";
 			button2.UseVisualStyleBackColor = true;
@@ -76,18 +78,19 @@
 			// 
 			// button3
 			// 
-			button3.Location = new Point(692, 10);
+			button3.Location = new Point(716, 10);
 			button3.Name = "button3";
-			button3.Size = new Size(94, 60);
+			button3.Size = new Size(104, 60);
 			button3.TabIndex = 3;
-			button3.Text = "Mesaj";
+			button3.Text = "Mesajlar";
 			button3.UseVisualStyleBackColor = true;
+			button3.Click += button3_Click;
 			// 
 			// button4
 			// 
-			button4.Location = new Point(692, 208);
+			button4.Location = new Point(716, 208);
 			button4.Name = "button4";
-			button4.Size = new Size(94, 60);
+			button4.Size = new Size(104, 60);
 			button4.TabIndex = 4;
 			button4.Text = "Açılan Dersler";
 			button4.UseVisualStyleBackColor = true;
@@ -96,9 +99,9 @@
 			// comboBox1
 			// 
 			comboBox1.FormattingEnabled = true;
-			comboBox1.Location = new Point(0, 15);
+			comboBox1.Location = new Point(14, 15);
 			comboBox1.Name = "comboBox1";
-			comboBox1.Size = new Size(370, 28);
+			comboBox1.Size = new Size(305, 28);
 			comboBox1.TabIndex = 5;
 			// 
 			// checkedListBox1
@@ -106,15 +109,15 @@
 			checkedListBox1.FormattingEnabled = true;
 			checkedListBox1.Location = new Point(3, 61);
 			checkedListBox1.Name = "checkedListBox1";
-			checkedListBox1.Size = new Size(676, 400);
+			checkedListBox1.Size = new Size(707, 400);
 			checkedListBox1.TabIndex = 6;
 			checkedListBox1.Visible = false;
 			// 
 			// button5
 			// 
-			button5.Location = new Point(692, 274);
+			button5.Location = new Point(716, 274);
 			button5.Name = "button5";
-			button5.Size = new Size(94, 60);
+			button5.Size = new Size(104, 60);
 			button5.TabIndex = 7;
 			button5.Text = "Ders Ekle";
 			button5.UseVisualStyleBackColor = true;
@@ -122,9 +125,9 @@
 			// 
 			// button6
 			// 
-			button6.Location = new Point(401, 6);
+			button6.Location = new Point(333, 6);
 			button6.Name = "button6";
-			button6.Size = new Size(151, 45);
+			button6.Size = new Size(151, 49);
 			button6.TabIndex = 8;
 			button6.Text = "Talep Edilen Dersler";
 			button6.UseVisualStyleBackColor = true;
@@ -132,18 +135,40 @@
 			// 
 			// button7
 			// 
-			button7.Location = new Point(572, 6);
+			button7.Location = new Point(611, 6);
 			button7.Name = "button7";
-			button7.Size = new Size(99, 45);
+			button7.Size = new Size(99, 49);
 			button7.TabIndex = 9;
 			button7.Text = "Talep İptal";
 			button7.UseVisualStyleBackColor = true;
 			button7.Click += button7_Click;
 			// 
+			// button8
+			// 
+			button8.Location = new Point(487, 6);
+			button8.Name = "button8";
+			button8.Size = new Size(118, 49);
+			button8.TabIndex = 10;
+			button8.Text = "Onaylanan Dersler";
+			button8.UseVisualStyleBackColor = true;
+			button8.Click += button8_Click;
+			// 
+			// button9
+			// 
+			button9.Location = new Point(716, 340);
+			button9.Name = "button9";
+			button9.Size = new Size(104, 60);
+			button9.TabIndex = 11;
+			button9.Text = "Çıkış";
+			button9.UseVisualStyleBackColor = true;
+			button9.Click += button9_Click;
+			// 
 			// StudentScreen
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(button9);
+			Controls.Add(button8);
 			Controls.Add(button7);
 			Controls.Add(button6);
 			Controls.Add(button5);
@@ -155,7 +180,8 @@
 			Controls.Add(richTextBox1);
 			Controls.Add(button1);
 			Name = "StudentScreen";
-			Size = new Size(855, 528);
+			Size = new Size(855, 534);
+			VisibleChanged += StudentScreen_VisibleChanged;
 			ResumeLayout(false);
 		}
 
@@ -172,5 +198,7 @@
 		private Button button5;
 		private Button button6;
 		private Button button7;
+		private Button button8;
+		private Button button9;
 	}
 }

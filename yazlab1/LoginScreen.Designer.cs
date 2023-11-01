@@ -40,7 +40,7 @@
 			// 
 			// button1
 			// 
-			button1.Location = new Point(346, 278);
+			button1.Location = new Point(360, 277);
 			button1.Name = "button1";
 			button1.Size = new Size(108, 44);
 			button1.TabIndex = 0;
@@ -126,7 +126,7 @@
 			Controls.Add(label1);
 			Controls.Add(button1);
 			Name = "LoginScreen";
-			Size = new Size(800, 500);
+			Size = new Size(824, 443);
 			Load += LoginScreen_Load;
 			ResumeLayout(false);
 			PerformLayout();

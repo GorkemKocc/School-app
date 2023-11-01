@@ -37,7 +37,7 @@
 			// 
 			adminScreen1.Location = new Point(0, 0);
 			adminScreen1.Name = "adminScreen1";
-			adminScreen1.Size = new Size(808, 469);
+			adminScreen1.Size = new Size(866, 367);
 			adminScreen1.TabIndex = 0;
 			// 
 			// loginScreen1
@@ -52,14 +52,14 @@
 			// 
 			studentScreen1.Location = new Point(0, 0);
 			studentScreen1.Name = "studentScreen1";
-			studentScreen1.Size = new Size(808, 458);
+			studentScreen1.Size = new Size(855, 534);
 			studentScreen1.TabIndex = 2;
 			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(809, 498);
+			ClientSize = new Size(828, 491);
 			Controls.Add(studentScreen1);
 			Controls.Add(loginScreen1);
 			Controls.Add(adminScreen1);

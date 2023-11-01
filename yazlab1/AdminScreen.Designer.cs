@@ -41,15 +41,18 @@
 			label5 = new Label();
 			textBox5 = new TextBox();
 			button1 = new Button();
-			button2 = new Button();
 			comboBox1 = new ComboBox();
 			button3 = new Button();
+			button4 = new Button();
+			checkBox3 = new CheckBox();
+			label6 = new Label();
+			button2 = new Button();
 			SuspendLayout();
 			// 
 			// checkBox1
 			// 
 			checkBox1.AutoSize = true;
-			checkBox1.Location = new Point(702, 31);
+			checkBox1.Location = new Point(725, 31);
 			checkBox1.Name = "checkBox1";
 			checkBox1.Size = new Size(83, 24);
 			checkBox1.TabIndex = 0;
@@ -60,7 +63,7 @@
 			// checkBox2
 			// 
 			checkBox2.AutoSize = true;
-			checkBox2.Location = new Point(702, 78);
+			checkBox2.Location = new Point(725, 66);
 			checkBox2.Name = "checkBox2";
 			checkBox2.Size = new Size(66, 24);
 			checkBox2.TabIndex = 1;
@@ -161,7 +164,7 @@
 			// 
 			// button1
 			// 
-			button1.Location = new Point(702, 116);
+			button1.Location = new Point(725, 137);
 			button1.Name = "button1";
 			button1.Size = new Size(94, 48);
 			button1.TabIndex = 12;
@@ -169,27 +172,18 @@
 			button1.UseVisualStyleBackColor = true;
 			button1.Click += button1_Click;
 			// 
-			// button2
-			// 
-			button2.Location = new Point(617, 32);
-			button2.Name = "button2";
-			button2.Size = new Size(64, 29);
-			button2.TabIndex = 13;
-			button2.Text = "Göster";
-			button2.UseVisualStyleBackColor = true;
-			button2.Click += button2_Click;
-			// 
 			// comboBox1
 			// 
 			comboBox1.FormattingEnabled = true;
-			comboBox1.Location = new Point(538, 33);
+			comboBox1.Location = new Point(527, 29);
 			comboBox1.Name = "comboBox1";
-			comboBox1.Size = new Size(73, 28);
+			comboBox1.Size = new Size(167, 28);
 			comboBox1.TabIndex = 14;
+			comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
 			// 
 			// button3
 			// 
-			button3.Location = new Point(702, 172);
+			button3.Location = new Point(725, 191);
 			button3.Name = "button3";
 			button3.Size = new Size(94, 45);
 			button3.TabIndex = 15;
@@ -197,13 +191,57 @@
 			button3.UseVisualStyleBackColor = true;
 			button3.Click += button3_Click;
 			// 
+			// button4
+			// 
+			button4.Location = new Point(725, 242);
+			button4.Name = "button4";
+			button4.Size = new Size(94, 45);
+			button4.TabIndex = 16;
+			button4.Text = "Sil";
+			button4.UseVisualStyleBackColor = true;
+			button4.Click += button4_Click;
+			// 
+			// checkBox3
+			// 
+			checkBox3.AutoSize = true;
+			checkBox3.Location = new Point(725, 100);
+			checkBox3.Name = "checkBox3";
+			checkBox3.Size = new Size(61, 24);
+			checkBox3.TabIndex = 17;
+			checkBox3.Text = "Ders";
+			checkBox3.UseVisualStyleBackColor = true;
+			checkBox3.CheckedChanged += checkBox3_CheckedChanged;
+			// 
+			// label6
+			// 
+			label6.AutoSize = true;
+			label6.Location = new Point(536, 6);
+			label6.Name = "label6";
+			label6.Size = new Size(147, 20);
+			label6.TabIndex = 18;
+			label6.Text = "Ders Eklenecek Hoca";
+			label6.Visible = false;
+			// 
+			// button2
+			// 
+			button2.Location = new Point(725, 293);
+			button2.Name = "button2";
+			button2.Size = new Size(94, 45);
+			button2.TabIndex = 19;
+			button2.Text = "Çıkış";
+			button2.UseVisualStyleBackColor = true;
+			button2.Click += button2_Click;
+			// 
 			// AdminScreen
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(button2);
+			Controls.Add(label6);
+			Controls.Add(checkBox3);
+			Controls.Add(button4);
 			Controls.Add(button3);
 			Controls.Add(comboBox1);
-			Controls.Add(button2);
 			Controls.Add(button1);
 			Controls.Add(label5);
 			Controls.Add(textBox5);
@@ -218,7 +256,7 @@
 			Controls.Add(checkBox2);
 			Controls.Add(checkBox1);
 			Name = "AdminScreen";
-			Size = new Size(833, 500);
+			Size = new Size(866, 367);
 			Load += AdminScreen_Load;
 			ResumeLayout(false);
 			PerformLayout();
@@ -239,8 +277,11 @@
 		private Label label5;
 		private TextBox textBox5;
 		private Button button1;
-		private Button button2;
 		private ComboBox comboBox1;
 		private Button button3;
+		private Button button4;
+		private CheckBox checkBox3;
+		private Label label6;
+		private Button button2;
 	}
 }
