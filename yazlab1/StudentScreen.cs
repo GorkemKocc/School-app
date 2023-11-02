@@ -440,9 +440,7 @@ namespace yazlab1
 			}
 			else if (button5.Text == "Hoca Talep Onayı")
 			{
-				/*connection.Open();
-
-				string updateQuery = "UPDATE students SET demanded_lectures = jsonb_set(demanded_lectures, '{agreement_status}', '\"Kabul Edildi\"', false) WHERE demanded_lectures @> '{\"teachers_id\": \"@identificationNumber\", \"teachers_name\": \"@teacherName\", \"course_info\": \"@courseInfo\"}' AND student_id = @studentId;";
+				connection.Open();
 
 				foreach (object selectedItem in checkedListBox1.CheckedItems)
 				{
@@ -450,32 +448,45 @@ namespace yazlab1
 
 					string[] parts = selectedText.Split('-');
 
-					string identificationNumber = parts[0].Trim();
-					string teacherName = parts[1].Trim();
-					string courseInfo = parts[2].Trim();
-					string demand = parts[3].Trim();
-
-					if (demand != "Hoca Talebi")
-						continue;
-
-					using (NpgsqlCommand command = new NpgsqlCommand(updateQuery, connection))
+					if (parts.Length == 4 && parts[3] == " Hoca Talebi")
 					{
-						command.Parameters.AddWithValue("studentId", 1);///////******* girilen id yap DÜZELT*************************************
-						command.Parameters.AddWithValue("identificationNumber", identificationNumber);
-						command.Parameters.AddWithValue("teacherName", teacherName);
-						command.Parameters.AddWithValue("courseInfo", courseInfo);
-						command.ExecuteNonQuery();
+						string demander = "Hoca";
+						string courseInfo = parts[2].Trim();
+						string teachersId = parts[0].Trim();
+						string teachersName = parts[1].Trim();
+						string agreementStatus = "Talep Edildi";
+
+						string updateQuery = "UPDATE students " +
+											"SET demanded_lectures = jsonb_set(demanded_lectures, '{1, agreement_status}', '\"Kabul Edildi\"'::jsonb) " +
+											"WHERE student_id = @studentId " +
+											"AND demanded_lectures -> 1 ->> 'demander' = @demander " +
+											"AND demanded_lectures -> 1 ->> 'course_info' = @courseInfo " +
+											"AND demanded_lectures -> 1 ->> 'teachers_id' = @teachersId " +
+											"AND demanded_lectures -> 1 ->> 'teachers_name' = @teachersName " +
+											"AND demanded_lectures -> 1 ->> 'agreement_status' = @agreementStatus";
+
+						using (NpgsqlCommand cmd = new NpgsqlCommand(updateQuery, connection))
+						{
+							cmd.Parameters.AddWithValue("@studentId", 1);
+							cmd.Parameters.AddWithValue("@demander", demander);
+							cmd.Parameters.AddWithValue("@courseInfo", courseInfo);
+							cmd.Parameters.AddWithValue("@teachersId", teachersId);
+							cmd.Parameters.AddWithValue("@teachersName", teachersName);
+							cmd.Parameters.AddWithValue("@agreementStatus", agreementStatus);
+
+							cmd.ExecuteNonQuery();
+						}
+						MessageBox.Show(courseInfo + " Kabul Edildi");
+
 					}
-
 				}
+				connection.Close();
 
-				connection.Close();*/
+				if (checkedListBox1.CheckedItems.Count == 0)
+					return;
 
-
-
-
+				button6_Click(sender, e);
 			}
-
 		}
 
 		private void button6_Click(object sender, EventArgs e)
