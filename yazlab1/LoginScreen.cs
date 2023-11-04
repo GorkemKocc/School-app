@@ -18,6 +18,7 @@ namespace yazlab1
 	{
 		public UserControl adminScreen;
 		public UserControl studentScreen;
+		public UserControl teacherScreen;
 		public User user;
 
 		NpgsqlConnection connection = new NpgsqlConnection("server=localHost; port=5432; Database=yazlab1; user ID=postgres; password=admin");
@@ -70,8 +71,38 @@ namespace yazlab1
 			}
 			if (checkBox2.Checked)
 			{
+				string query = "SELECT * FROM teachers WHERE username = @username AND password = @password";
+
+				connection.Open();
+
+				using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+				{
+					cmd.Parameters.AddWithValue("username", user.username);
+					cmd.Parameters.AddWithValue("password", user.password);
+
+					using (NpgsqlDataReader reader = cmd.ExecuteReader())
+					{
+						if (!reader.Read())
+						{
+							MessageBox.Show("Eksik veya Yanlış Giriş Yapıldı");
+							connection.Close();
+							return;
+						}
+						else
+						{
+							user.name = reader["name"].ToString();
+							user.surname = reader["surname"].ToString();
+							user.id = int.Parse(reader["identification_number"].ToString());
+						}
+						connection.Close();
+					}
+				}
+
+				this.Visible = false;
+				teacherScreen.Visible = true;
 				checkBox1.Checked = false;
 				checkBox3.Checked = false;
+
 			}
 			if (checkBox3.Checked)
 			{

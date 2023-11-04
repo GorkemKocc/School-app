@@ -15,9 +15,12 @@ namespace yazlab1
 		{
 			loginScreen1.adminScreen = adminScreen1;
 			loginScreen1.studentScreen = studentScreen1;
+			loginScreen1.teacherScreen = teacherScreen1;
+
 			adminScreen1.loginScreen = loginScreen1;
 			studentScreen1.loginScreen = loginScreen1;
 
+			teacherScreen1.user = loginScreen1.user;
 			studentScreen1.user = loginScreen1.user;
 		}
 	}
