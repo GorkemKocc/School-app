@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic.Devices;
+using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
+using Spire.Pdf;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace yazlab1
@@ -20,6 +25,7 @@ namespace yazlab1
 		public AdminScreen()
 		{
 			InitializeComponent();
+			GetTranscript();
 		}
 
 		private void AdminScreen_Load(object sender, EventArgs e)
@@ -30,7 +36,97 @@ namespace yazlab1
 			textBox4.Text = null;
 			textBox5.Text = null;
 		}
+		void GetTranscript()
+		{
+			PdfDocument pdfDocument = new PdfDocument();
+			pdfDocument.LoadFromFile("C:\\Users\\isgor\\Downloads\\transkript.pdf");
 
+			string textData = "";
+
+			foreach (PdfPageBase page in pdfDocument.Pages)
+			{
+				string text = page.ExtractText();
+				textData += text;
+			}
+
+			pdfDocument.Close();
+
+			TranscriptSplit(textData);
+		}
+
+
+		static List<string[]> course_data = new List<string[]>();
+
+		List<string> grade = new List<string> { "AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF" };
+
+		List<string[]> RandomTranscriptGenerate()
+		{
+			List<string[]> randomTranscript = new List<string[]>();
+
+			Random random = new Random();
+
+			for (int i = 0; i < 50; i++)
+			{
+				int index = random.Next(course_data.Count);
+				string[] selectedCourse = course_data[index];
+
+				bool isDuplicate = false;
+
+				foreach (string[] course in randomTranscript)
+				{
+					if (course[0] == selectedCourse[0] && course[1] == selectedCourse[1])
+					{
+						isDuplicate = true;
+						break;
+					}
+				}
+
+				if (!isDuplicate)
+				{
+					int randomIndex = random.Next(grade.Count);
+					string randomGrade = grade[randomIndex];
+					selectedCourse[2] = randomGrade;
+					randomTranscript.Add(selectedCourse);
+				}
+			}
+
+			return randomTranscript;
+		}
+		void TranscriptSplit(string text)
+		{
+			string[] splittedLines = text.Split('\n');
+			decimal gpa = 0;
+			for (int i = 0; i < splittedLines.Length; i++)
+			{
+				if (splittedLines[i].EndsWith("(Comment)\r"))
+				{
+					int x = i + 1;
+					while (!splittedLines[x].TrimStart().StartsWith("DNO"))
+					{
+						List<string> course = new List<string>();
+						string[] a = splittedLines[x].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+						course.Add(a[0]);
+						List<string> courseNameParts = new List<string>();
+						for (int j = 1; j < a.Length; j++)
+						{
+							if (a[j] != "Z" && a[j] != "S")
+							{
+								courseNameParts.Add(a[j]);
+							}
+							else
+							{
+								break;
+							}
+						}
+						string courseName = string.Join(" ", courseNameParts);
+						course.Add(courseName);
+						course.Add(a[a.Length - 3]);
+						course_data.Add(course.ToArray());
+						x += 2;
+					}
+				}
+			}
+		}
 		private void checkBox2_CheckedChanged(object sender, EventArgs e)
 		{
 			if (checkBox2.Checked)
@@ -575,6 +671,12 @@ namespace yazlab1
 			button2.Visible = true;
 			button3.Visible = true;
 			button4.Visible = true;
+
+			button5.Visible = false;
+
+			numericUpDown1.Value = 0;
+			numericUpDown1.Visible = false;
+
 			comboBox1.SelectedItem = null;
 			comboBox1.Items.Clear();
 			loginScreen.Visible = true;
@@ -657,6 +759,83 @@ namespace yazlab1
 				connection.Close();
 
 			}
+		}
+
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+
+			connection.Open();
+			for (int i = 0; i < (int)numericUpDown1.Value; i++)
+			{
+				Random random = new Random();
+
+				string randomName = "Student" + random.Next(1000);
+
+				string randomSurname = "Surname" + random.Next(1000);
+
+				double randomGPA = Math.Round(random.NextDouble() * 4.0, 2);
+
+				string randomUsername = "username" + random.Next(1000);
+
+				string randomPassword = "password" + random.Next(1000);
+
+
+				string insertQuery = "INSERT INTO students (name, surname, gpa, username, password, collage_id, transcript) VALUES (@name, @surname, @gpa, @username, @password, @collage_id, @transcript) RETURNING student_id";
+
+
+				List<string[]> randomTranscript = RandomTranscriptGenerate();
+
+				string courseCode = randomTranscript[0][0];
+				string courseName = randomTranscript[0][1];
+				string courseGrade = randomTranscript[0][2];
+				int studentId;
+
+				string jsonTranscript = $@"[{{""course_code"": ""{courseCode}"", ""course_name"": ""{courseName}"", ""course_grade"": ""{courseGrade}""}}]";
+
+
+
+				using (NpgsqlCommand cmd = new NpgsqlCommand(insertQuery, connection))
+				{
+					cmd.Parameters.AddWithValue("name", randomName);
+					cmd.Parameters.AddWithValue("surname", randomSurname);
+					cmd.Parameters.AddWithValue("gpa", randomGPA);
+					cmd.Parameters.AddWithValue("username", randomUsername);
+					cmd.Parameters.AddWithValue("password", randomPassword);
+					cmd.Parameters.AddWithValue("collage_id", 1);
+
+					cmd.Parameters.AddWithValue("transcript", NpgsqlTypes.NpgsqlDbType.Jsonb, jsonTranscript);
+
+					studentId = (int)cmd.ExecuteScalar();
+
+				}
+				for (int j = 1; j < randomTranscript.Count; j++)
+				{
+					string updateQuery = @"
+										UPDATE students
+										SET transcript = transcript || @jsonTranscript
+										WHERE student_id = @studentId";
+
+					courseCode = randomTranscript[j][0];
+					courseName = randomTranscript[j][1];
+					courseGrade = randomTranscript[j][2];
+
+					jsonTranscript = $@"[{{""course_code"": ""{courseCode}"", ""course_name"": ""{courseName}"", ""course_grade"": ""{courseGrade}""}}]";
+
+					using (NpgsqlCommand command = new NpgsqlCommand(updateQuery, connection))
+					{
+						string courseJson = JsonConvert.SerializeObject(randomTranscript[j]);
+						command.Parameters.AddWithValue("jsonTranscript", NpgsqlTypes.NpgsqlDbType.Jsonb, jsonTranscript);
+						command.Parameters.AddWithValue("studentId", studentId);
+
+						command.ExecuteNonQuery();
+					}
+				}
+			}
+
+			connection.Close();
+
+			MessageBox.Show(numericUpDown1.Value + " Öğrenci Eklendi");
 		}
 	}
 }

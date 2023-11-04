@@ -192,9 +192,6 @@ namespace yazlab1
 			if (openFileDialog1.ShowDialog() == DialogResult.OK)
 			{
 				GetTranscript(openFileDialog1.FileName);
-				string secilenDosyaYolu = openFileDialog1.FileName;
-				MessageBox.Show("Seçilen Dosya: " + secilenDosyaYolu);
-
 				connection.Open();
 
 				bool isFirstCourse = true;
@@ -240,6 +237,9 @@ namespace yazlab1
 						button.Enabled = true;
 					}
 				}
+
+				string secilenDosyaYolu = openFileDialog1.FileName;
+				MessageBox.Show("Transkript Başarıyla Eklendi ( " + secilenDosyaYolu + " )");
 			}
 
 		}
@@ -447,36 +447,56 @@ namespace yazlab1
 					string jsonLecture = $@"[{{""teachers_id"": ""{identificationNumber}"", ""teachers_name"": ""{teacherName}"", ""course_info"": ""{courseInfo}"", ""agreement_status"": ""{agreementStatus}"", ""demander"": ""{demander}""}}]";
 
 
-					if (true)
+
+					string selectQuery = "SELECT demanded_lectures FROM students WHERE student_id = @studentId";
+
+					using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
 					{
-						string selectQuery = "SELECT demanded_lectures FROM students WHERE student_id = @studentId";
+						command.Parameters.AddWithValue("studentId", user.id);
 
-						using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+						using (NpgsqlDataReader reader = command.ExecuteReader())
 						{
-							command.Parameters.AddWithValue("studentId", user.id);
-
-							using (NpgsqlDataReader reader = command.ExecuteReader())
+							if (!isFirstCourse && reader.Read())
 							{
-								if (reader.Read())
+								string demandedLectures = reader["demanded_lectures"].ToString();
+
+								var jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(demandedLectures) as Newtonsoft.Json.Linq.JArray;
+
+								int count = jsonArray.Count(item => item["course_info"].ToString() == courseInfo);
+
+								bool exists = jsonArray.Any(item =>
+															item["teachers_id"].ToString() == identificationNumber &&
+															item["teachers_name"].ToString() == teacherName &&
+															item["course_info"].ToString() == courseInfo);
+								bool teacherExist = jsonArray.Any(item => item["teachers_id"].ToString() == identificationNumber);
+
+
+								if (exists)
 								{
-									string demandedLectures = reader["demanded_lectures"].ToString();
-
-									var jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(demandedLectures) as Newtonsoft.Json.Linq.JArray;
-
-									int count = jsonArray.Count(item => item["course_info"].ToString() == courseInfo);
-
-									if (demandLimit <= count)
+									MessageBox.Show("Ders Talep Listesinde Bulunuyor " + "( " + selectedText + " )");
+									continue;
+								}
+								else if (demandLimit <= count)
+								{
+									MessageBox.Show("Aynı Ders En Fazla " + demandLimit + " Hocadan Talep Edilebilir" + "( " + selectedText + " )");
+									continue;
+								}
+								else if (teacherExist)
+								{
+									if (teacherSelectLimit)
 									{
-										MessageBox.Show("Aynı Ders En Fazla " + demandLimit + " Hocadan Talep Edilebilir");
+										MessageBox.Show(" Aynı Hocadan Birden Fazla Ders Talep Edilemez " + "( " + selectedText + " )");
 										continue;
 									}
-
-									reader.Close();
 								}
-							}
-						}
 
+
+							}
+							reader.Close();
+						}
 					}
+
+
 
 					if (isFirstCourse)
 					{
@@ -500,19 +520,15 @@ namespace yazlab1
 
 						command.ExecuteNonQuery();
 					}
-					MessageBox.Show("Talep Edildi");
+					MessageBox.Show(selectedText + " Talep Edildi");
 
 				}
 				connection.Close();
 
-				foreach (object checkedItem in checkedListBox1.CheckedItems)
+				foreach (object checkedItem in checkedListBox1.CheckedItems.OfType<object>().ToList())
 				{
 					checkedListBox1.SetItemChecked(checkedListBox1.Items.IndexOf(checkedItem), false);
 				}
-
-
-
-
 
 			}
 			else if (button5.Text == "Hoca Talep Onayı")
@@ -592,7 +608,7 @@ namespace yazlab1
 						}
 						connection.Close();
 
-						MessageBox.Show(courseInfo + " Kabul Edildi");
+						MessageBox.Show(selectedText + " Kabul Edildi");
 					}
 				}
 

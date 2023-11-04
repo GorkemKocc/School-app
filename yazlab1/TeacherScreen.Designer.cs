@@ -56,13 +56,19 @@
 			textBox2 = new TextBox();
 			label1 = new Label();
 			button19 = new Button();
+			button20 = new Button();
+			listBox2 = new ListBox();
+			richTextBox2 = new RichTextBox();
+			button21 = new Button();
+			comboBox3 = new ComboBox();
 			SuspendLayout();
 			// 
 			// button1
 			// 
-			button1.Location = new Point(19, 131);
+			button1.Location = new Point(15, 105);
+			button1.Margin = new Padding(2);
 			button1.Name = "button1";
-			button1.Size = new Size(269, 40);
+			button1.Size = new Size(215, 32);
 			button1.TabIndex = 0;
 			button1.Text = "Talepte bulunan öğrenciler";
 			button1.UseVisualStyleBackColor = true;
@@ -70,9 +76,10 @@
 			// 
 			// button2
 			// 
-			button2.Location = new Point(19, 177);
+			button2.Location = new Point(15, 142);
+			button2.Margin = new Padding(2);
 			button2.Name = "button2";
-			button2.Size = new Size(269, 40);
+			button2.Size = new Size(215, 32);
 			button2.TabIndex = 1;
 			button2.Text = "Talebi onaylanmamış öğrenciler";
 			button2.UseVisualStyleBackColor = true;
@@ -80,9 +87,10 @@
 			// 
 			// button3
 			// 
-			button3.Location = new Point(19, 227);
+			button3.Location = new Point(15, 182);
+			button3.Margin = new Padding(2);
 			button3.Name = "button3";
-			button3.Size = new Size(269, 40);
+			button3.Size = new Size(215, 32);
 			button3.TabIndex = 2;
 			button3.Text = "Talep oluşturmamış öğrenciler";
 			button3.UseVisualStyleBackColor = true;
@@ -90,9 +98,10 @@
 			// 
 			// button5
 			// 
-			button5.Location = new Point(71, 319);
+			button5.Location = new Point(57, 255);
+			button5.Margin = new Padding(2);
 			button5.Name = "button5";
-			button5.Size = new Size(114, 81);
+			button5.Size = new Size(91, 65);
 			button5.TabIndex = 4;
 			button5.Text = "kriter ders seç";
 			button5.UseVisualStyleBackColor = true;
@@ -101,18 +110,20 @@
 			// listBox1
 			// 
 			listBox1.FormattingEnabled = true;
-			listBox1.ItemHeight = 25;
-			listBox1.Location = new Point(294, 26);
+			listBox1.ItemHeight = 20;
+			listBox1.Location = new Point(235, 21);
+			listBox1.Margin = new Padding(2);
 			listBox1.Name = "listBox1";
-			listBox1.Size = new Size(460, 579);
+			listBox1.Size = new Size(369, 464);
 			listBox1.TabIndex = 5;
 			listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
 			// 
 			// button6
 			// 
-			button6.Location = new Point(787, 285);
+			button6.Location = new Point(630, 228);
+			button6.Margin = new Padding(2);
 			button6.Name = "button6";
-			button6.Size = new Size(160, 68);
+			button6.Size = new Size(128, 54);
 			button6.TabIndex = 6;
 			button6.Text = "bilgileri görüntüle";
 			button6.UseVisualStyleBackColor = true;
@@ -120,18 +131,21 @@
 			// 
 			// button7
 			// 
-			button7.Location = new Point(788, 360);
+			button7.Location = new Point(15, 14);
+			button7.Margin = new Padding(2);
 			button7.Name = "button7";
-			button7.Size = new Size(160, 78);
+			button7.Size = new Size(105, 50);
 			button7.TabIndex = 7;
 			button7.Text = "mesaj gönder";
 			button7.UseVisualStyleBackColor = true;
+			button7.Click += button7_Click;
 			// 
 			// button8
 			// 
-			button8.Location = new Point(480, 256);
+			button8.Location = new Point(384, 205);
+			button8.Margin = new Padding(2);
 			button8.Name = "button8";
-			button8.Size = new Size(112, 34);
+			button8.Size = new Size(90, 27);
 			button8.TabIndex = 11;
 			button8.Text = "ileri";
 			button8.UseVisualStyleBackColor = true;
@@ -139,9 +153,10 @@
 			// 
 			// button9
 			// 
-			button9.Location = new Point(528, 366);
+			button9.Location = new Point(422, 293);
+			button9.Margin = new Padding(2);
 			button9.Name = "button9";
-			button9.Size = new Size(112, 34);
+			button9.Size = new Size(90, 27);
 			button9.TabIndex = 13;
 			button9.Text = "sırala";
 			button9.UseVisualStyleBackColor = true;
@@ -150,17 +165,19 @@
 			// listBox3
 			// 
 			listBox3.FormattingEnabled = true;
-			listBox3.ItemHeight = 25;
-			listBox3.Location = new Point(175, 26);
+			listBox3.ItemHeight = 20;
+			listBox3.Location = new Point(140, 21);
+			listBox3.Margin = new Padding(2);
 			listBox3.Name = "listBox3";
-			listBox3.Size = new Size(611, 454);
+			listBox3.Size = new Size(490, 364);
 			listBox3.TabIndex = 14;
 			// 
 			// button4
 			// 
-			button4.Location = new Point(19, 88);
+			button4.Location = new Point(15, 70);
+			button4.Margin = new Padding(2);
 			button4.Name = "button4";
-			button4.Size = new Size(269, 37);
+			button4.Size = new Size(215, 30);
 			button4.TabIndex = 15;
 			button4.Text = "Dersler";
 			button4.UseVisualStyleBackColor = true;
@@ -169,17 +186,19 @@
 			// checkedListBox2
 			// 
 			checkedListBox2.FormattingEnabled = true;
-			checkedListBox2.Location = new Point(294, 17);
+			checkedListBox2.Location = new Point(235, 14);
+			checkedListBox2.Margin = new Padding(2);
 			checkedListBox2.Name = "checkedListBox2";
-			checkedListBox2.Size = new Size(492, 564);
+			checkedListBox2.Size = new Size(394, 444);
 			checkedListBox2.TabIndex = 16;
 			checkedListBox2.ItemCheck += checkedListBox2_ItemCheck;
 			// 
 			// button10
 			// 
-			button10.Location = new Point(786, 207);
+			button10.Location = new Point(629, 166);
+			button10.Margin = new Padding(2);
 			button10.Name = "button10";
-			button10.Size = new Size(160, 60);
+			button10.Size = new Size(128, 48);
 			button10.TabIndex = 17;
 			button10.Text = "ders ekle";
 			button10.UseVisualStyleBackColor = true;
@@ -187,9 +206,10 @@
 			// 
 			// button11
 			// 
-			button11.Location = new Point(786, 146);
+			button11.Location = new Point(629, 117);
+			button11.Margin = new Padding(2);
 			button11.Name = "button11";
-			button11.Size = new Size(161, 55);
+			button11.Size = new Size(129, 44);
 			button11.TabIndex = 18;
 			button11.Text = "talebi onayla";
 			button11.UseVisualStyleBackColor = true;
@@ -197,9 +217,10 @@
 			// 
 			// button12
 			// 
-			button12.Location = new Point(19, 273);
+			button12.Location = new Point(15, 218);
+			button12.Margin = new Padding(2);
 			button12.Name = "button12";
-			button12.Size = new Size(269, 40);
+			button12.Size = new Size(215, 32);
 			button12.TabIndex = 19;
 			button12.Text = "ilgi alanı ekle";
 			button12.UseVisualStyleBackColor = true;
@@ -207,16 +228,18 @@
 			// 
 			// textBox1
 			// 
-			textBox1.Location = new Point(334, 273);
+			textBox1.Location = new Point(267, 218);
+			textBox1.Margin = new Padding(2);
 			textBox1.Name = "textBox1";
-			textBox1.Size = new Size(258, 31);
+			textBox1.Size = new Size(207, 27);
 			textBox1.TabIndex = 20;
 			// 
 			// button13
 			// 
-			button13.Location = new Point(646, 273);
+			button13.Location = new Point(517, 218);
+			button13.Margin = new Padding(2);
 			button13.Name = "button13";
-			button13.Size = new Size(94, 40);
+			button13.Size = new Size(75, 32);
 			button13.TabIndex = 21;
 			button13.Text = "ekle";
 			button13.UseVisualStyleBackColor = true;
@@ -224,9 +247,10 @@
 			// 
 			// button14
 			// 
-			button14.Location = new Point(787, 27);
+			button14.Location = new Point(630, 22);
+			button14.Margin = new Padding(2);
 			button14.Name = "button14";
-			button14.Size = new Size(161, 55);
+			button14.Size = new Size(129, 44);
 			button14.TabIndex = 22;
 			button14.Text = "talepte bulun";
 			button14.UseVisualStyleBackColor = true;
@@ -235,16 +259,18 @@
 			// comboBox1
 			// 
 			comboBox1.FormattingEnabled = true;
-			comboBox1.Location = new Point(564, 88);
+			comboBox1.Location = new Point(451, 70);
+			comboBox1.Margin = new Padding(2);
 			comboBox1.Name = "comboBox1";
-			comboBox1.Size = new Size(302, 33);
+			comboBox1.Size = new Size(242, 28);
 			comboBox1.TabIndex = 23;
 			// 
 			// button15
 			// 
-			button15.Location = new Point(872, 86);
+			button15.Location = new Point(698, 69);
+			button15.Margin = new Padding(2);
 			button15.Name = "button15";
-			button15.Size = new Size(76, 35);
+			button15.Size = new Size(61, 28);
 			button15.TabIndex = 24;
 			button15.Text = "onayla";
 			button15.UseVisualStyleBackColor = true;
@@ -252,9 +278,10 @@
 			// 
 			// button16
 			// 
-			button16.Location = new Point(835, 501);
+			button16.Location = new Point(668, 401);
+			button16.Margin = new Padding(2);
 			button16.Name = "button16";
-			button16.Size = new Size(112, 34);
+			button16.Size = new Size(90, 27);
 			button16.TabIndex = 27;
 			button16.Text = "sırala";
 			button16.UseVisualStyleBackColor = true;
@@ -263,24 +290,27 @@
 			// comboBox2
 			// 
 			comboBox2.FormattingEnabled = true;
-			comboBox2.Location = new Point(19, 422);
+			comboBox2.Location = new Point(15, 338);
+			comboBox2.Margin = new Padding(2);
 			comboBox2.Name = "comboBox2";
-			comboBox2.Size = new Size(269, 33);
+			comboBox2.Size = new Size(216, 28);
 			comboBox2.TabIndex = 28;
 			// 
 			// checkedListBox3
 			// 
 			checkedListBox3.FormattingEnabled = true;
-			checkedListBox3.Location = new Point(465, 390);
+			checkedListBox3.Location = new Point(372, 312);
+			checkedListBox3.Margin = new Padding(2);
 			checkedListBox3.Name = "checkedListBox3";
-			checkedListBox3.Size = new Size(364, 200);
+			checkedListBox3.Size = new Size(292, 158);
 			checkedListBox3.TabIndex = 29;
 			// 
 			// button17
 			// 
-			button17.Location = new Point(28, 487);
+			button17.Location = new Point(22, 390);
+			button17.Margin = new Padding(2);
 			button17.Name = "button17";
-			button17.Size = new Size(132, 48);
+			button17.Size = new Size(106, 38);
 			button17.TabIndex = 30;
 			button17.Text = "kriter ekle";
 			button17.UseVisualStyleBackColor = true;
@@ -288,9 +318,10 @@
 			// 
 			// button18
 			// 
-			button18.Location = new Point(835, 459);
+			button18.Location = new Point(668, 367);
+			button18.Margin = new Padding(2);
 			button18.Name = "button18";
-			button18.Size = new Size(112, 34);
+			button18.Size = new Size(90, 27);
 			button18.TabIndex = 31;
 			button18.Text = "kriter sil";
 			button18.UseVisualStyleBackColor = true;
@@ -298,34 +329,92 @@
 			// 
 			// textBox2
 			// 
-			textBox2.Location = new Point(326, 425);
+			textBox2.Location = new Point(261, 340);
+			textBox2.Margin = new Padding(2);
 			textBox2.Name = "textBox2";
-			textBox2.Size = new Size(133, 31);
+			textBox2.Size = new Size(107, 27);
 			textBox2.TabIndex = 32;
 			// 
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(294, 425);
+			label1.Location = new Point(235, 340);
+			label1.Margin = new Padding(2, 0, 2, 0);
 			label1.Name = "label1";
-			label1.Size = new Size(20, 25);
+			label1.Size = new Size(16, 20);
 			label1.TabIndex = 33;
 			label1.Text = "x";
 			// 
 			// button19
 			// 
-			button19.Location = new Point(813, 0);
+			button19.Location = new Point(650, 0);
+			button19.Margin = new Padding(2);
 			button19.Name = "button19";
-			button19.Size = new Size(101, 58);
+			button19.Size = new Size(81, 46);
 			button19.TabIndex = 34;
 			button19.Text = "geri";
 			button19.UseVisualStyleBackColor = true;
 			button19.Click += button19_Click;
 			// 
+			// button20
+			// 
+			button20.Location = new Point(22, 459);
+			button20.Margin = new Padding(2);
+			button20.Name = "button20";
+			button20.Size = new Size(89, 50);
+			button20.TabIndex = 35;
+			button20.Text = "Çıkış";
+			button20.UseVisualStyleBackColor = true;
+			button20.Click += button20_Click;
+			// 
+			// listBox2
+			// 
+			listBox2.FormattingEnabled = true;
+			listBox2.ItemHeight = 20;
+			listBox2.Location = new Point(235, 30);
+			listBox2.Margin = new Padding(2);
+			listBox2.Name = "listBox2";
+			listBox2.Size = new Size(278, 364);
+			listBox2.TabIndex = 36;
+			// 
+			// richTextBox2
+			// 
+			richTextBox2.Location = new Point(528, 52);
+			richTextBox2.Name = "richTextBox2";
+			richTextBox2.Size = new Size(270, 205);
+			richTextBox2.TabIndex = 37;
+			richTextBox2.Text = "";
+			richTextBox2.Visible = false;
+			// 
+			// button21
+			// 
+			button21.Location = new Point(561, 262);
+			button21.Margin = new Padding(2);
+			button21.Name = "button21";
+			button21.Size = new Size(196, 50);
+			button21.TabIndex = 38;
+			button21.Text = "mesaj gönder";
+			button21.UseVisualStyleBackColor = true;
+			button21.Click += button21_Click;
+			// 
+			// comboBox3
+			// 
+			comboBox3.FormattingEnabled = true;
+			comboBox3.Location = new Point(518, 18);
+			comboBox3.Name = "comboBox3";
+			comboBox3.Size = new Size(305, 28);
+			comboBox3.TabIndex = 39;
+			comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+			// 
 			// TeacherScreen
 			// 
-			AutoScaleDimensions = new SizeF(10F, 25F);
+			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(comboBox3);
+			Controls.Add(button21);
+			Controls.Add(richTextBox2);
+			Controls.Add(listBox2);
+			Controls.Add(button20);
 			Controls.Add(button19);
 			Controls.Add(label1);
 			Controls.Add(textBox2);
@@ -354,8 +443,9 @@
 			Controls.Add(button3);
 			Controls.Add(button2);
 			Controls.Add(button1);
+			Margin = new Padding(2);
 			Name = "TeacherScreen";
-			Size = new Size(964, 656);
+			Size = new Size(880, 525);
 			Load += TeacherScreen_Load;
 			ResumeLayout(false);
 			PerformLayout();
@@ -391,5 +481,10 @@
 		private TextBox textBox2;
 		private Label label1;
 		private Button button19;
+		private Button button20;
+		private ListBox listBox2;
+		private RichTextBox richTextBox2;
+		private Button button21;
+		private ComboBox comboBox3;
 	}
 }

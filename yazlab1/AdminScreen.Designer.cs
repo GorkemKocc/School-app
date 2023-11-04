@@ -287,6 +287,7 @@
 			button5.Text = "Ekle";
 			button5.UseVisualStyleBackColor = true;
 			button5.Visible = false;
+			button5.Click += button5_Click;
 			// 
 			// AdminScreen
 			// 

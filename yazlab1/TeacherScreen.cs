@@ -34,6 +34,7 @@ namespace yazlab1
 		private string courseName;
 		private string courseid;
 		private int teacher_quota;
+		private string coursecode;
 		private List<Tuple<int, double>> studentssum = new List<Tuple<int, double>>();
 		private List<Tuple<int, double>> studentssum2 = new List<Tuple<int, double>>();
 		public LoginScreen loginScreen = new LoginScreen();
@@ -43,6 +44,7 @@ namespace yazlab1
 		public TeacherScreen()
 		{
 			InitializeComponent();
+			comboBox1.Name = "Mesajlar";
 		}
 
 		private void TeacherScreen_Load(object sender, EventArgs e)
@@ -51,7 +53,7 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -76,8 +78,10 @@ namespace yazlab1
 			textBox2.Visible = false;
 			button19.Visible = false;
 
-
-
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 
 			userName = user.username;
 			userPassword = user.password;
@@ -111,11 +115,17 @@ namespace yazlab1
 
 		private void button1_Click(object sender, EventArgs e)  ///////TALEP EDEN ÖĞRENCİLERİ GÖSTERME
 		{
+			listBox1.Items.Clear();
 			button1.Visible = false;
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -173,10 +183,8 @@ namespace yazlab1
 							{
 								if (item["agreement_status"].ToString() == "Talep Edildi")
 								{
-									listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + " " + courseinfo);
-									int ss = Convert.ToInt32(reader["student_id"]);
-									Tuple<int, double> tuple = new Tuple<int, double>(ss, 0);
-									studentssum.Add(tuple);
+									listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + "-" + courseinfo);
+
 								}
 							}
 						}
@@ -201,7 +209,7 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -229,7 +237,10 @@ namespace yazlab1
 			button1.Visible = true;
 			button2.Visible = true;
 			button3.Visible = true;
-
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 
 
 
@@ -243,7 +254,7 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -275,7 +286,10 @@ namespace yazlab1
 			checkedListBox3.Visible = true;
 			button16.Visible = true;
 			button18.Visible = true;
-
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 
 			HashSet<string> courses = new HashSet<string>();
 
@@ -330,6 +344,10 @@ namespace yazlab1
 			button9.Visible = true;
 			button14.Visible = true;
 			button15.Visible = true;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			comboBox1.Visible = true;
 		}
 
@@ -339,7 +357,10 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -385,13 +406,17 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
 			listBox3.Visible = false;
 			button10.Visible = false;
 			button1.Visible = true;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			button2.Visible = true;
 			button3.Visible = true;
 			checkedListBox2.Visible = false;
@@ -412,7 +437,7 @@ namespace yazlab1
 			studentssum.Clear();
 			listBox1.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			button5.Visible = true;
 			listBox1.Items.Clear();
 			listBox1.Text = null;
@@ -424,8 +449,31 @@ namespace yazlab1
 
 
 			List<JObject> jsonList = new List<JObject>();
+			List<string> lectures = new List<string>(); connection.Open();
+			using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT lectures FROM teachers WHERE identification_number = @identificationid", connection))
+			{
+				cmd.Parameters.AddWithValue("identificationid", identificationid);
+				using (NpgsqlDataReader reader = cmd.ExecuteReader())
+				{
 
 
+					while (reader.Read())
+					{
+
+						if (!reader.IsDBNull(0)) // JSON verisi boş değilse
+						{
+							string jsonStr = reader[0].ToString();
+							JArray lecturesArray = JArray.Parse(jsonStr);
+
+							foreach (JToken lecture in lecturesArray)
+							{
+								lectures.Add(lecture["course_code"].ToString());
+							}
+						}
+					}
+				}
+			}
+			connection.Close();
 			connection.Open();
 			using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
 			using (NpgsqlDataReader reader = cmd.ExecuteReader())
@@ -439,19 +487,24 @@ namespace yazlab1
 						foreach (var item in demandedlecturesArray)
 						{
 							string courseinfo = item["course_info"].ToString();
+							int index = courseinfo.IndexOf(" ");
+							courseinfo = courseinfo.Substring(0, index);
 
 							// teachers_id'yi bir tamsayıya dönüştürün
 							int teachersId = Convert.ToInt32(item["teachers_id"]);
 
 							if (teachersId != identificationid)
 							{
-								if (item["agreement_status"].ToString() == "Talep Edildi")
+								foreach (var lecture in lectures)
 								{
-									listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + " " + courseinfo);
-									int ss = Convert.ToInt32(item["student_id"]);
-									Tuple<int, double> tuple = new Tuple<int, double>(ss, 0);
-									studentssum.Add(tuple);
+									if (item["agreement_status"].ToString() == "Talep Edildi" && lecture == courseinfo)
+									{
+										courseinfo = item["course_info"].ToString();
+										listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + " " + courseinfo);
+
+									}
 								}
+
 							}
 						}
 					}
@@ -469,8 +522,12 @@ namespace yazlab1
 			button1.Visible = false;
 			button2.Visible = false;
 			button3.Visible = false;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -496,7 +553,7 @@ namespace yazlab1
 
 			listBox1.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+
 			button5.Visible = true;
 			listBox1.Items.Clear();
 			listBox1.Text = null;
@@ -516,26 +573,11 @@ namespace yazlab1
 			{
 				while (reader.Read())
 				{
-					if (!reader.IsDBNull(0)) // JSON verisi boş değilse
+					if (reader.IsDBNull(0)) // JSON verisi boş değilse
 					{
-						string json = reader.GetString(0);
-						JArray demandedlecturesArray = JArray.Parse(json);
-						foreach (var item in demandedlecturesArray)
-						{
-							string courseinfo = item["course_info"].ToString();
 
-							// teachers_id'yi bir tamsayıya dönüştürün
-							int teachersId = Convert.ToInt32(item["teachers_id"]);
+						listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"]);
 
-
-							if (item["agreement_status"].ToString() == " ")
-							{
-								listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"]);
-								int ss = Convert.ToInt32(item["student_id"]);
-								Tuple<int, double> tuple = new Tuple<int, double>(ss, 0);
-								studentssum.Add(tuple);
-							}
-						}
 					}
 				}
 			}
@@ -548,13 +590,15 @@ namespace yazlab1
 		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			button6.Visible = true;
-			button7.Visible = true;
+
 			button11.Visible = true;
 
 			string str = listBox1.SelectedItem.ToString();
 			int index = str.IndexOf(" ");
 			studentinfo = str.Substring(0, index);
 			studentid = Convert.ToInt32(studentinfo);
+			int index2 = str.IndexOf("-") + 1;
+			coursecode = str.Substring(index2);
 
 
 		}
@@ -565,7 +609,10 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -632,8 +679,11 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
-			listBox1.Visible = false;
+
+			listBox1.Visible = false; richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
 			listBox3.Visible = false;
@@ -719,7 +769,10 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -765,7 +818,7 @@ namespace yazlab1
 							{
 								if (item["course_code"].ToString() == courseid)
 								{
-									item["lecture_status"] = 1;
+									item["lecture_status"] = "1";
 									updated = true; // Öğe güncellendi
 								}
 							}
@@ -821,11 +874,11 @@ namespace yazlab1
 
 						foreach (var item in lecturesArray)
 						{
-							if (item["teachers_id"].ToString() == identificationid.ToString() && item["agreement_status"].ToString() == "Talep Edildi")
+							if (item["teachers_id"].ToString() == identificationid.ToString() && item["course_info"].ToString() == coursecode && item["agreement_status"].ToString() == "Talep Edildi")
 							{
 								item["agreement_status"] = "Kabul Edildi";
 								updated = true; // Öğe güncellendi
-								button11.Enabled = false;
+												//  button11.Enabled = false;
 							}
 						}
 
@@ -838,6 +891,7 @@ namespace yazlab1
                     SET demanded_lectures = @jsonLectures
                     WHERE student_id = @studentid";
 							connection.Close();
+
 							connection.Open();
 							using (NpgsqlCommand cmd = new NpgsqlCommand(updateQuery, connection))
 							{
@@ -878,10 +932,11 @@ namespace yazlab1
 							}
 							button10.Enabled = false;
 						}
-
+						connection.Close();
 					}
 				}
 			}
+			button1_Click(sender, e);
 		}
 
 
@@ -905,8 +960,11 @@ namespace yazlab1
 			button1.Visible = false;
 			button2.Visible = false;
 			button3.Visible = false;
-			button6.Visible = false;
-			button7.Visible = false;
+			button6.Visible = false; richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -1057,12 +1115,9 @@ namespace yazlab1
 			cmd.Parameters.AddWithValue("studentid", studentid);
 			NpgsqlDataReader reader = cmd.ExecuteReader();
 			{
-
 				while (reader.Read())
 				{
-					string jsonStr = reader[0].ToString();
-					JArray Array = JArray.Parse(jsonStr);
-					if (Array != null) // JSON verisi boş değilse
+					if (!reader.IsDBNull(0)) // JSON verisi boş değilse
 					{
 						isFirstValue = false;
 					}
@@ -1107,20 +1162,69 @@ namespace yazlab1
 
 		private void button16_Click(object sender, EventArgs e)
 		{
-			double sum = 0;
+			connection.Open();
+			string query = "SELECT demanded_lectures, student_id, name, surname FROM students";
 
+
+			List<JObject> jsonList = new List<JObject>();
+			using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+			using (NpgsqlDataReader reader = cmd.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					if (!reader.IsDBNull(0)) // JSON verisi boş değilse
+					{
+						string json = reader.GetString(0);
+						JArray demandedlecturesArray = JArray.Parse(json);
+						foreach (var item in demandedlecturesArray)
+						{
+							string courseinfo = item["course_info"].ToString();
+
+							// teachers_id'yi bir tamsayıya dönüştürün
+							int teachersId = Convert.ToInt32(item["teachers_id"]);
+
+							if (teachersId != identificationid)
+							{
+								if (item["agreement_status"].ToString() == "Talep Edildi")
+								{
+									//listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + "-" + courseinfo);
+									int ss = Convert.ToInt32(reader["student_id"]);
+									Tuple<int, double> tuple = new Tuple<int, double>(ss, 0);
+									studentssum.Add(tuple);
+								}
+							}
+						}
+					}
+					if (reader.IsDBNull(0)) // JSON verisi boş değilse
+					{
+						// listBox1.Items.Add(reader["student_id"] + " " + reader["name"] + " " + reader["surname"] + "-" + courseinfo);
+						int ss = Convert.ToInt32(reader["student_id"]);
+						Tuple<int, double> tuple = new Tuple<int, double>(ss, 0);
+						studentssum.Add(tuple);
+					}
+				}
+
+				connection.Close();
+				//  listBox1.Visible = true;
+
+			}
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
 			checkedListBox2.Visible = false;
 			textBox2.Visible = false;
 			label1.Visible = false;
 			button17.Visible = false;
 			checkedListBox3.Visible = false;
-
+			Tuple<int, double> tuple2 = new Tuple<int, double>(0, 0);
 			foreach (var student in studentssum)
 			{
-				List<JObject> jsonList = new List<JObject>();
+				double sum = 0;
+				List<JObject> jsonList2 = new List<JObject>();
 				connection.Open();
-				string query = "SELECT transcript  FROM students WHERE student_id = @studentid";
-				using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+				string query2 = "SELECT transcript  FROM students WHERE student_id = @studentid";
+				using (NpgsqlCommand cmd = new NpgsqlCommand(query2, connection))
 				{
 					cmd.Parameters.AddWithValue("studentid", student.Item1);
 					using (NpgsqlDataReader reader = cmd.ExecuteReader())
@@ -1187,15 +1291,17 @@ namespace yazlab1
 							}
 						}
 					}
-					double stu2 = student.Item2;
-					Tuple<int, double> tuple = new Tuple<int, double>(student.Item1, stu2 + sum);
-					studentssum2.Add(tuple);
+
 					listBox1.Visible = true;
 					listBox3.Visible = false;
 					connection.Close();
+					double stu2 = student.Item2;
+					Tuple<int, double> tuple = new Tuple<int, double>(student.Item1, stu2 + sum);
+					studentssum2.Add(tuple);
 				}
+
 			}
-			Tuple<int, double> tuple2 = new Tuple<int, double>(0, 0);
+
 			for (int i = 0; i < studentssum2.Count; i++)
 			{
 				for (int j = 0; j < studentssum2.Count - 1; j++)
@@ -1220,8 +1326,8 @@ namespace yazlab1
 			{
 
 				connection.Open();
-				string query = "SELECT name, surname FROM students WHERE student_id = @studentid";
-				using (NpgsqlCommand cmd = new NpgsqlCommand(query, connection))
+				string query3 = "SELECT name, surname FROM students WHERE student_id = @studentid";
+				using (NpgsqlCommand cmd = new NpgsqlCommand(query3, connection))
 				{
 					cmd.Parameters.AddWithValue("studentid", student.Item1);
 					using (NpgsqlDataReader reader = cmd.ExecuteReader())
@@ -1270,7 +1376,11 @@ namespace yazlab1
 			button2.Visible = false;
 			button3.Visible = false;
 			button6.Visible = false;
-			button7.Visible = false;
+			richTextBox2.Visible = false;
+			listBox2.Visible = false;
+			comboBox3.Visible = false;
+			button21.Visible = false;
+
 			listBox1.Visible = false;
 			button8.Visible = false;
 			button9.Visible = false;
@@ -1301,6 +1411,177 @@ namespace yazlab1
 			listBox1.Visible = true;
 			button19.Visible = false;
 
+		}
+
+		private void button20_Click(object sender, EventArgs e)
+		{
+			TeacherScreen_Load(sender, e);
+			this.Visible = false;
+			loginScreen.Visible = true;
+		}
+
+		private void button7_Click(object sender, EventArgs e)
+		{
+			TeacherScreen_Load(sender, e);
+
+			richTextBox2.Visible = true;
+			listBox2.Visible = true;
+			comboBox3.Visible = true;
+			button21.Visible = true;
+			comboBox3.Items.Clear();
+			comboBox3.Name = "Mesajlar";
+			comboBox3.Text = "Mesajlar";
+
+			connection.Open();
+			using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT student_id, name, surname FROM students", connection))
+			using (NpgsqlDataReader reader = cmd.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					string formattedTeacher = $"{reader["student_id"]} - {reader["name"]} {reader["surname"]}";
+					comboBox3.Items.Add(formattedTeacher);
+				}
+			}
+			connection.Close();
+
+			connection.Open();
+			using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT character_limit FROM collage WHERE collage_id = 1", connection))
+			using (NpgsqlDataReader reader = cmd.ExecuteReader())
+			{
+				while (reader.Read())
+				{
+					richTextBox2.MaxLength = int.Parse(reader["character_limit"].ToString());
+				}
+			}
+			connection.Close();
+		}
+
+		void getMessages()
+		{
+			if (comboBox3.Name == "Mesajlar" && comboBox3.Items.Count != 0)
+			{
+				string[] student = comboBox3.Text.Split("-");
+				connection.Open();
+				listBox2.Items.Clear();
+
+				string selectQuery = "SELECT sent_messages FROM teachers where identification_number = @identification_number ";
+
+				using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+				{
+					command.Parameters.AddWithValue("identification_number", user.id);
+
+					using (NpgsqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							string sentMessages = reader["sent_messages"].ToString();
+
+							var jsonArray = Newtonsoft.Json.JsonConvert.DeserializeObject(sentMessages) as Newtonsoft.Json.Linq.JArray;
+
+							string formattedSentMessages = "";
+
+							if (jsonArray != null)
+							{
+								foreach (var item in jsonArray)
+								{
+
+									string sent = item["sent"].ToString();
+									string text = item["text"].ToString();
+									string studentId = item["student_id"].ToString();
+									string studentName = item["student_name"].ToString();
+
+									if (int.Parse(sent) == 0 && int.Parse(studentId) == int.Parse(student[0].Trim()))
+									{
+										formattedSentMessages = $"{user.name} {user.surname} : {text}";
+										listBox2.Items.Add(formattedSentMessages);
+									}
+									else if (int.Parse(sent) == 1 && int.Parse(studentId) == int.Parse(student[0].Trim()))
+									{
+										formattedSentMessages = $"{studentId} - {studentName} : {text}";
+										listBox2.Items.Add(formattedSentMessages);
+									}
+								}
+							}
+						}
+					}
+				}
+				connection.Close();
+			}
+
+		}
+		private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			getMessages();
+		}
+
+		private void button21_Click(object sender, EventArgs e)
+		{
+
+			//gönder
+			if (comboBox1.Text != "Mesajlar")
+			{
+
+				string[] student = comboBox3.Text.Split("-");
+
+				connection.Open();
+
+				bool isFirstCourse = true;
+				string updateQuery;
+
+				using (NpgsqlCommand command = new NpgsqlCommand("SELECT sent_messages FROM teachers WHERE identification_number = @identificationNumber", connection))
+				{
+					command.Parameters.AddWithValue("identificationNumber", user.id);
+
+					using (NpgsqlDataReader reader = command.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							if (reader.IsDBNull(0))
+							{
+								isFirstCourse = true;
+							}
+							else
+								isFirstCourse = false;
+						}
+						reader.Close();
+					}
+				}
+
+				string message = richTextBox2.Text;
+				string sent = "0";
+				string identificationNumber = user.id.ToString();
+				string teacherName = userName + " " + user.surname;
+				string studentid = student[0].Trim();
+				string studentName = student[1];
+
+				string jsonLecture = $@"[{{""sent"": ""{sent}"", ""text"": ""{message.Replace("\n", "\\n")}"", ""student_id"": ""{studentid}"", ""student_name"": ""{studentName}""}}]";
+
+				if (isFirstCourse)
+				{
+					updateQuery = @"
+						UPDATE teachers
+						SET sent_messages = @jsonLecture
+						WHERE identification_number = @identificationNumber";
+					isFirstCourse = false;
+				}
+				else
+				{
+					updateQuery = @"
+						UPDATE teachers
+						SET sent_messages = sent_messages || @jsonLecture
+						WHERE identification_number = @identificationNumber";
+				}
+				using (NpgsqlCommand command = new NpgsqlCommand(updateQuery, connection))
+				{
+					command.Parameters.AddWithValue("jsonLecture", NpgsqlTypes.NpgsqlDbType.Jsonb, jsonLecture);
+					command.Parameters.AddWithValue("identificationNumber", int.Parse(identificationNumber));
+
+					command.ExecuteNonQuery();
+				}
+				connection.Close();
+				richTextBox2.Text = "";
+				getMessages();
+			}
 		}
 	}
 }

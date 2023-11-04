@@ -63,7 +63,7 @@
 			// 
 			teacherScreen1.Location = new Point(0, 0);
 			teacherScreen1.Name = "teacherScreen1";
-			teacherScreen1.Size = new Size(771, 525);
+			teacherScreen1.Size = new Size(880, 525);
 			teacherScreen1.TabIndex = 3;
 			teacherScreen1.Visible = false;
 			// 
