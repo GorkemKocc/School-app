@@ -37,6 +37,11 @@ namespace yazlab1
 			{
 				button3.Visible = true;
 				button4.Visible = true;
+				button5.Visible = false;
+
+				numericUpDown1.Visible = false;
+
+				comboBox1.Visible = true;
 
 				label1.Visible = true;
 				label2.Visible = true;
@@ -44,6 +49,7 @@ namespace yazlab1
 				label4.Visible = true;
 				label5.Visible = true;
 				label6.Visible = false;
+				label7.Visible = false;
 				textBox1.Visible = true;
 				textBox2.Visible = true;
 				textBox3.Visible = true;
@@ -51,6 +57,14 @@ namespace yazlab1
 				textBox5.Visible = true;
 				checkBox1.Checked = false;
 				checkBox3.Checked = false;
+				checkBox4.Checked = false;
+
+				checkBox5.Visible = false;
+
+				label1.Location = new Point(21, 31);
+				label5.Location = new Point(256, 32);
+				textBox5.TextAlign = HorizontalAlignment.Left;
+				textBox1.TextAlign = HorizontalAlignment.Left;
 
 				comboBox1.Items.Clear();
 				comboBox1.Text = null;
@@ -84,6 +98,11 @@ namespace yazlab1
 			{
 				button3.Visible = true;
 				button4.Visible = true;
+				button5.Visible = false;
+
+				numericUpDown1.Visible = false;
+
+				comboBox1.Visible = true;
 
 				label1.Visible = true;
 				label2.Visible = true;
@@ -91,6 +110,7 @@ namespace yazlab1
 				label4.Visible = true;
 				label5.Visible = true;
 				label6.Visible = false;
+				label7.Visible = false;
 				textBox1.Visible = true;
 				textBox2.Visible = true;
 				textBox3.Visible = false;
@@ -98,6 +118,14 @@ namespace yazlab1
 				textBox5.Visible = true;
 				checkBox2.Checked = false;
 				checkBox3.Checked = false;
+				checkBox4.Checked = false;
+
+				checkBox5.Visible = false;
+
+				label1.Location = new Point(21, 31);
+				label5.Location = new Point(256, 32);
+				textBox5.TextAlign = HorizontalAlignment.Left;
+				textBox1.TextAlign = HorizontalAlignment.Left;
 
 				comboBox1.Items.Clear();
 				comboBox1.Text = null;
@@ -127,7 +155,7 @@ namespace yazlab1
 
 				connection.Open();
 
-				using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO students (name, surname, username, password) VALUES (@name, @surname, @username, @password)"))
+				using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO students (name, surname, username, password, collage_id) VALUES (@name, @surname, @username, @password, 1)"))
 				{
 					cmd.Connection = connection;
 
@@ -142,11 +170,11 @@ namespace yazlab1
 
 				MessageBox.Show("Kayıt Başarılı");
 			}
-			if (checkBox2.Checked && textBox1.Text.Length > 0 && textBox2.Text.Length > 0 && int.TryParse(textBox3.Text, out int n) && textBox4.Text.Length > 0 && textBox5.Text.Length > 0) //teacher
+			else if (checkBox2.Checked && textBox1.Text.Length > 0 && textBox2.Text.Length > 0 && int.TryParse(textBox3.Text, out int n) && textBox4.Text.Length > 0 && textBox5.Text.Length > 0) //teacher
 			{
 				connection.Open();
 
-				using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO teachers (name, surname, quota, username, password) VALUES (@name, @surname, @quota, @username, @password)"))
+				using (NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO teachers (name, surname, quota, username, password, collage_id) VALUES (@name, @surname, @quota, @username, @password, 1)"))
 				{
 					cmd.Connection = connection;
 
@@ -162,7 +190,7 @@ namespace yazlab1
 
 				MessageBox.Show("Kayıt Başarılı");
 			}
-			if (checkBox3.Checked && textBox1.Text.Length > 0 && textBox5.Text.Length > 0) //lectures
+			else if (checkBox3.Checked && textBox1.Text.Length > 0 && textBox5.Text.Length > 0) //lectures
 			{
 				string[] parts = comboBox1.SelectedItem.ToString().Split(' ');
 
@@ -229,6 +257,50 @@ namespace yazlab1
 						return;
 					}
 				}
+			}
+			else if (checkBox4.Checked && textBox1.Text.Length > 0 && textBox5.Text.Length > 0 && int.TryParse(textBox1.Text, out int characterLimit) && int.TryParse(textBox5.Text, out int demandLimit))
+			{
+				connection.Open();
+
+				using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT COUNT(*) FROM collage WHERE collage_id = 1", connection))
+				{
+					long existingRecordCount = (long)cmd.ExecuteScalar();
+
+					if (existingRecordCount > 0)
+					{
+						// Mevcut bir kayıt var, bu nedenle güncelleme yapmalıyız
+						using (NpgsqlCommand updateCmd = new NpgsqlCommand("UPDATE collage SET character_limit = @characterLimit, demand_limit = @demandLimit, teacher_select_limit = @teacherSelectLimit WHERE collage_id = 1", connection))
+						{
+							updateCmd.Parameters.AddWithValue("@characterLimit", characterLimit);
+							updateCmd.Parameters.AddWithValue("@demandLimit", demandLimit);
+							updateCmd.Parameters.AddWithValue("@teacherSelectLimit", checkBox5.Checked);
+
+							updateCmd.ExecuteNonQuery();
+						}
+					}
+					else
+					{
+						// collage_id = 1 olan bir kayıt yok, yeni bir kayıt eklemeliyiz
+						using (NpgsqlCommand insertCmd = new NpgsqlCommand("INSERT INTO collage (collage_id, character_limit, demand_limit, teacher_select_limit, admin_username, admin_password) VALUES (1, @characterLimit, @demandLimit, @teacherSelectLimit, 'Admin', 'admin')", connection))
+						{
+							insertCmd.Parameters.AddWithValue("@characterLimit", characterLimit);
+							insertCmd.Parameters.AddWithValue("@demandLimit", demandLimit);
+							insertCmd.Parameters.AddWithValue("@teacherSelectLimit", checkBox5.Checked);
+
+							insertCmd.ExecuteNonQuery();
+						}
+					}
+				}
+
+				connection.Close();
+
+				MessageBox.Show("Kayıt Başarılı");
+				return;
+			}
+			else
+			{
+				MessageBox.Show("Eksik veya Hatalı Giriş Yapıldı");
+				return;
 			}
 			comboBox1.SelectedIndex = 0;
 			checkBox1_CheckedChanged(sender, new EventArgs());
@@ -414,14 +486,29 @@ namespace yazlab1
 		{
 			if (checkBox3.Checked)
 			{
+				foreach (Control control in this.Controls)
+				{
+					if (control is TextBox)
+					{
+						TextBox textBox = (TextBox)control;
+						textBox.Text = "";
+					}
+				}
+
 				button3.Visible = false;
 				button4.Visible = false;
+				button5.Visible = false;
+
+				comboBox1.Visible = true;
+
+				numericUpDown1.Visible = false;
 
 				label1.Visible = true;
 				label2.Visible = false;
 				label3.Visible = false;
 				label4.Visible = false;
 				label5.Visible = true;
+				label7.Visible = false;
 				textBox1.Visible = true;
 				textBox2.Visible = false;
 				textBox3.Visible = false;
@@ -429,6 +516,14 @@ namespace yazlab1
 				textBox5.Visible = true;
 				checkBox1.Checked = false;
 				checkBox2.Checked = false;
+				checkBox4.Checked = false;
+
+				checkBox5.Visible = false;
+
+				label1.Location = new Point(21, 31);
+				label5.Location = new Point(256, 32);
+				textBox5.TextAlign = HorizontalAlignment.Left;
+				textBox1.TextAlign = HorizontalAlignment.Left;
 
 				label1.Text = "Ders Kodu";
 				label5.Text = "Ders Adı";
@@ -471,6 +566,11 @@ namespace yazlab1
 			checkBox1.Checked = false;
 			checkBox2.Checked = false;
 			checkBox3.Checked = false;
+			checkBox4.Checked = false;
+
+			checkBox5.Visible = false;
+			comboBox1.Visible = false;
+
 			button1.Visible = true;
 			button2.Visible = true;
 			button3.Visible = true;
@@ -479,6 +579,84 @@ namespace yazlab1
 			comboBox1.Items.Clear();
 			loginScreen.Visible = true;
 			this.Visible = false;
+		}
+
+		private void checkBox4_CheckedChanged(object sender, EventArgs e)
+		{
+			if (checkBox4.Checked)
+			{
+				foreach (Control control in this.Controls)
+				{
+					if (control is TextBox)
+					{
+						TextBox textBox = (TextBox)control;
+						textBox.Text = "";
+					}
+				}
+				comboBox1.Items.Clear();
+				comboBox1.Text = null;
+
+				button3.Visible = false;
+				button4.Visible = false;
+				button5.Visible = true;
+
+				numericUpDown1.Visible = true;
+				numericUpDown1.Maximum = 50;
+
+				label2.Visible = false;
+				label3.Visible = false;
+				label4.Visible = false;
+				label6.Visible = false;
+				label7.Visible = true;
+				textBox2.Visible = false;
+				textBox3.Visible = false;
+				textBox4.Visible = false;
+				comboBox1.Visible = false;
+
+				checkBox1.Checked = false;
+				checkBox2.Checked = false;
+				checkBox3.Checked = false;
+
+				checkBox5.Visible = true;
+
+				label1.Visible = true;
+				label1.Text = "Mesaj Karakter\r\n        Limit";
+				label1.Location = new Point(15, 20);
+				textBox1.Visible = true;
+				textBox5.Visible = true;
+				label5.Visible = true;
+				label5.Text = "Ders Başına Hoca\r\n    Seçim Limiti";
+				label5.Location = new Point(244, 20);
+				textBox5.TextAlign = HorizontalAlignment.Center;
+				textBox1.TextAlign = HorizontalAlignment.Center;
+
+				connection.Open();
+				using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM collage WHERE collage_id = 1", connection))
+				{
+					using (NpgsqlDataReader reader = cmd.ExecuteReader())
+					{
+						if (reader.Read())
+						{
+							// Mevcut bir kayıt var, bu nedenle mevcut kayıdın özelliklerini alalım
+							int characterLimit = reader.GetInt32(reader.GetOrdinal("character_limit"));
+							int demandLimit = reader.GetInt32(reader.GetOrdinal("demand_limit"));
+							bool teacherSelectLimit = reader.GetBoolean(reader.GetOrdinal("teacher_select_limit"));
+
+							textBox1.Text = characterLimit.ToString();
+							textBox5.Text = demandLimit.ToString();
+							checkBox5.Checked = teacherSelectLimit;
+						}
+						else
+						{
+							textBox1.Text = null;
+							textBox5.Text = "1";
+							checkBox5.Checked = false;
+						}
+					}
+				}
+				connection.Close();
+
+			}
 		}
 	}
 }

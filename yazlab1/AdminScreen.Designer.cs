@@ -47,12 +47,18 @@
 			checkBox3 = new CheckBox();
 			label6 = new Label();
 			button2 = new Button();
+			checkBox4 = new CheckBox();
+			checkBox5 = new CheckBox();
+			numericUpDown1 = new NumericUpDown();
+			label7 = new Label();
+			button5 = new Button();
+			((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
 			SuspendLayout();
 			// 
 			// checkBox1
 			// 
 			checkBox1.AutoSize = true;
-			checkBox1.Location = new Point(725, 31);
+			checkBox1.Location = new Point(725, 15);
 			checkBox1.Name = "checkBox1";
 			checkBox1.Size = new Size(83, 24);
 			checkBox1.TabIndex = 0;
@@ -63,7 +69,7 @@
 			// checkBox2
 			// 
 			checkBox2.AutoSize = true;
-			checkBox2.Location = new Point(725, 66);
+			checkBox2.Location = new Point(725, 47);
 			checkBox2.Name = "checkBox2";
 			checkBox2.Size = new Size(66, 24);
 			checkBox2.TabIndex = 1;
@@ -204,7 +210,7 @@
 			// checkBox3
 			// 
 			checkBox3.AutoSize = true;
-			checkBox3.Location = new Point(725, 100);
+			checkBox3.Location = new Point(725, 77);
 			checkBox3.Name = "checkBox3";
 			checkBox3.Size = new Size(61, 24);
 			checkBox3.TabIndex = 17;
@@ -232,10 +238,65 @@
 			button2.UseVisualStyleBackColor = true;
 			button2.Click += button2_Click;
 			// 
+			// checkBox4
+			// 
+			checkBox4.AutoSize = true;
+			checkBox4.Location = new Point(725, 108);
+			checkBox4.Name = "checkBox4";
+			checkBox4.Size = new Size(65, 24);
+			checkBox4.TabIndex = 20;
+			checkBox4.Text = "Kural";
+			checkBox4.UseVisualStyleBackColor = true;
+			checkBox4.CheckedChanged += checkBox4_CheckedChanged;
+			// 
+			// checkBox5
+			// 
+			checkBox5.AutoSize = true;
+			checkBox5.Location = new Point(530, 18);
+			checkBox5.Name = "checkBox5";
+			checkBox5.Size = new Size(158, 44);
+			checkBox5.TabIndex = 21;
+			checkBox5.Text = "Aynı Hocadan Ders\r\n     Seçim Limiti";
+			checkBox5.UseVisualStyleBackColor = true;
+			checkBox5.Visible = false;
+			// 
+			// numericUpDown1
+			// 
+			numericUpDown1.Location = new Point(540, 119);
+			numericUpDown1.Name = "numericUpDown1";
+			numericUpDown1.Size = new Size(62, 27);
+			numericUpDown1.TabIndex = 22;
+			numericUpDown1.Visible = false;
+			// 
+			// label7
+			// 
+			label7.AutoSize = true;
+			label7.Location = new Point(546, 75);
+			label7.Name = "label7";
+			label7.Size = new Size(127, 40);
+			label7.TabIndex = 23;
+			label7.Text = "Otomatik Öğrenci\r\n          Ekleme";
+			label7.Visible = false;
+			// 
+			// button5
+			// 
+			button5.Location = new Point(613, 119);
+			button5.Name = "button5";
+			button5.Size = new Size(75, 27);
+			button5.TabIndex = 24;
+			button5.Text = "Ekle";
+			button5.UseVisualStyleBackColor = true;
+			button5.Visible = false;
+			// 
 			// AdminScreen
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(button5);
+			Controls.Add(label7);
+			Controls.Add(numericUpDown1);
+			Controls.Add(checkBox5);
+			Controls.Add(checkBox4);
 			Controls.Add(button2);
 			Controls.Add(label6);
 			Controls.Add(checkBox3);
@@ -258,6 +319,7 @@
 			Name = "AdminScreen";
 			Size = new Size(866, 367);
 			Load += AdminScreen_Load;
+			((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -283,5 +345,10 @@
 		private CheckBox checkBox3;
 		private Label label6;
 		private Button button2;
+		private CheckBox checkBox4;
+		private CheckBox checkBox5;
+		private NumericUpDown numericUpDown1;
+		private Label label7;
+		private Button button5;
 	}
 }

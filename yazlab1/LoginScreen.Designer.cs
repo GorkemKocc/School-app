@@ -126,8 +126,9 @@
 			Controls.Add(label1);
 			Controls.Add(button1);
 			Name = "LoginScreen";
-			Size = new Size(824, 443);
+			Size = new Size(893, 451);
 			Load += LoginScreen_Load;
+			VisibleChanged += LoginScreen_VisibleChanged;
 			ResumeLayout(false);
 			PerformLayout();
 		}

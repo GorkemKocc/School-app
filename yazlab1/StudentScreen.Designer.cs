@@ -41,6 +41,9 @@
 			button7 = new Button();
 			button8 = new Button();
 			button9 = new Button();
+			listBox1 = new ListBox();
+			richTextBox2 = new RichTextBox();
+			button10 = new Button();
 			SuspendLayout();
 			// 
 			// openFileDialog1
@@ -103,6 +106,7 @@
 			comboBox1.Name = "comboBox1";
 			comboBox1.Size = new Size(305, 28);
 			comboBox1.TabIndex = 5;
+			comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
 			// 
 			// checkedListBox1
 			// 
@@ -163,10 +167,44 @@
 			button9.UseVisualStyleBackColor = true;
 			button9.Click += button9_Click;
 			// 
+			// listBox1
+			// 
+			listBox1.FormattingEnabled = true;
+			listBox1.ItemHeight = 20;
+			listBox1.Location = new Point(3, 61);
+			listBox1.Name = "listBox1";
+			listBox1.Size = new Size(410, 384);
+			listBox1.TabIndex = 12;
+			listBox1.Visible = false;
+			// 
+			// richTextBox2
+			// 
+			richTextBox2.Location = new Point(416, 63);
+			richTextBox2.Name = "richTextBox2";
+			richTextBox2.Size = new Size(291, 205);
+			richTextBox2.TabIndex = 13;
+			richTextBox2.Text = "";
+			richTextBox2.Visible = false;
+			richTextBox2.TextChanged += richTextBox2_TextChanged;
+			// 
+			// button10
+			// 
+			button10.Location = new Point(487, 274);
+			button10.Name = "button10";
+			button10.Size = new Size(151, 49);
+			button10.TabIndex = 14;
+			button10.Text = "Gönder";
+			button10.UseVisualStyleBackColor = true;
+			button10.Visible = false;
+			button10.Click += button10_Click;
+			// 
 			// StudentScreen
 			// 
 			AutoScaleDimensions = new SizeF(8F, 20F);
 			AutoScaleMode = AutoScaleMode.Font;
+			Controls.Add(button10);
+			Controls.Add(richTextBox2);
+			Controls.Add(listBox1);
 			Controls.Add(button9);
 			Controls.Add(button8);
 			Controls.Add(button7);
@@ -181,6 +219,7 @@
 			Controls.Add(button1);
 			Name = "StudentScreen";
 			Size = new Size(855, 534);
+			Load += StudentScreen_Load;
 			VisibleChanged += StudentScreen_VisibleChanged;
 			ResumeLayout(false);
 		}
@@ -200,5 +239,8 @@
 		private Button button7;
 		private Button button8;
 		private Button button9;
+		private ListBox listBox1;
+		private RichTextBox richTextBox2;
+		private Button button10;
 	}
 }
