@@ -25,6 +25,7 @@ namespace yazlab1
 		public LoginScreen()
 		{
 			InitializeComponent();
+			user = new User();
 		}
 
 		private void LoginScreen_Load(object sender, EventArgs e)

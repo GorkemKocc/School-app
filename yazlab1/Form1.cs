@@ -4,7 +4,7 @@ namespace yazlab1
 {
 	public partial class Form1 : Form
 	{
-		NpgsqlConnection Connection = new NpgsqlConnection("server=localHost; port=5432; Database=yazlab1; user Id=Postgers; password=admin");
+		User user = new User();
 		public Form1()
 		{
 			InitializeComponent();
@@ -17,6 +17,8 @@ namespace yazlab1
 			loginScreen1.studentScreen = studentScreen1;
 			adminScreen1.loginScreen = loginScreen1;
 			studentScreen1.loginScreen = loginScreen1;
+
+			studentScreen1.user = loginScreen1.user;
 		}
 	}
 }
