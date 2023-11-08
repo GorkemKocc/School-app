@@ -1,1 +1,1 @@
-# yazlab1
+# Course Selection App
